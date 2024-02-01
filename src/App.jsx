@@ -1,12 +1,17 @@
 
+import Form from "./components/Form"
+import Header from "./components/Header"
+import PatientsList from "./components/PatientsList"
 
 function App() {
   return (
-    <>
-      <div>
-        <h1>Hola mundo</h1>
+      <div className="container mx-auto mt-12">
+      <Header/>
+      <div className="mt-12 md:flex">
+        <Form/>
+        <PatientsList/>
       </div>
-    </>
+      </div>
   )
 }
 
