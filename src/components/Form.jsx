@@ -1,8 +1,8 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Error from './Error';
 
 
-const Form = ({setPatients, patients, patient}) => {
+const Form = ({setPatients, patients, setPatient ,patient}) => {
 
   const [name, setName]=useState('');  
   const [owner, setOwner]=useState('');  
@@ -12,6 +12,15 @@ const Form = ({setPatients, patients, patient}) => {
   
   const [err, setErr]=useState(false);
 
+  useEffect(()=>{
+    if(Object.keys(patient).length>0){
+        setName(patient.name);
+        setOwner(patient.owner);
+        setEmail(patient.email);
+        setDate(patient.date);
+        setSymptoms(patient.symptoms);
+    }
+  },[patient])
   
   
   const generateId = ()=>{
@@ -36,9 +45,27 @@ const Form = ({setPatients, patients, patient}) => {
             email,
             date,
             symptoms,
-            id:generateId()
+            
         }
-        setPatients([...patients,PatientObject]);
+
+        if(patient.id){
+            PatientObject.id=patient.id;
+            const Updates = patients.map(element=>{
+                if(element.id === patient.id){
+                    return PatientObject;
+                } else{
+                    return element;
+                }
+            })
+
+            setPatients(Updates);            
+
+        } else{
+            PatientObject.id=generateId();
+            setPatients([...patients,PatientObject]);
+        }
+        setPatient({});
+        
         setName('');
         setOwner('');
         setEmail('');
@@ -123,7 +150,9 @@ const Form = ({setPatients, patients, patient}) => {
                         setSymptoms(e.target.value);
                     }} />
                 </div>
-                <input className="bg-indigo-600 hover:bg-indigo-700 w-full text-2xl py-2 cursor-pointer text-white rounded-md transition-colors " type="submit" value={'Agregar Paciente'} />
+                <input className="bg-indigo-600 hover:bg-indigo-700 w-full text-2xl py-2 cursor-pointer text-white rounded-md transition-colors"
+                type="submit" 
+                value={patient.id ? 'Editar Paciente' : 'Agregar paciente'} />
     
             </form>
         </div>

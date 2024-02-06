@@ -2,13 +2,14 @@ import { useEffect } from "react"
 import Card from "./Card"
 
 
-const PatientsList = ({patients,setPatient}) => {
+const PatientsList = ({patients,setPatient, deletePatient}) => {
   
   useEffect(()=>{
-    console.log('NUEVO PACIENTE');
+    if(patients.length>0){
+      console.log('Nuevo paciente')
+    }  
   },[patients])
-  return (
-    
+  return (  
     <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-hidden">
       {patients.length ? (
         <>
@@ -21,6 +22,7 @@ const PatientsList = ({patients,setPatient}) => {
                             key={patient.id} 
                             data={patient}
                             setPatient={setPatient}
+                            deletePatient={deletePatient}
                             /> )
                 })
               }  

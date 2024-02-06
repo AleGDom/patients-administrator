@@ -1,7 +1,14 @@
 
 
-const Card = ({data, setPatient}) => {
-  const {name,owner, email,date,symptoms}=data;
+const Card = ({data, setPatient,deletePatient}) => {
+  const {name,owner, email,date,symptoms,id}=data;
+  const handleDelete = ()=>{
+    const result = confirm('Desea eliminar el paciente?');
+
+    if(result){
+      deletePatient(id);
+    }
+  }
   return (
    <>
    <div className="m-5 bg-white shadow-md px-5 py-10 rounded-xl">
@@ -18,7 +25,7 @@ const Card = ({data, setPatient}) => {
             setPatient(data)
           }}
           >Editar</button>
-          <button type="button" className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md">Editar</button>
+          <button type="button" className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md" onClick={()=>handleDelete()}>Eliminar</button>
           
         </div>
       </div>
